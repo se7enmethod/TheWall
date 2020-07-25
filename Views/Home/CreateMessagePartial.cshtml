@@ -1,0 +1,20 @@
+
+@model Message
+
+<div class="row">
+    <div class="col-12 col-md-10 offset-md-1">
+        <form asp-action="CreateMessage" asp-controller="Home" method="post">
+
+            <div class="form-group">
+                <label asp-for="MessageContent"></label>&nbsp<span asp-validation-for="MessageContent" class="error-message"></span>
+                <textarea asp-for="MessageContent" class="form-control" id="message"></textarea>
+            </div>
+            <div class="form-group text-right">
+                <button class="btn btn-primary">Post a Message</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

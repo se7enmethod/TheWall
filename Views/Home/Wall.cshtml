@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "The Wall";
+}
+@model User
+ <div class="row">
+            <div class="col-9 offset-2">
+				<h4>Welcome </h4>
+<partial name="CreateMessagePartial"></partial>
+
+@foreach (var message in ViewBag.AllMessages)
+{
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+            <h5>@message.User.FirstName @message.User.LastName - @message.CreatedAt</h5>
+            <p>@message.MessageContent</p>
+        </div>
+    </div>
+    @foreach (var comment in message.Comments)
+    {
+        <div class="row">
+            <div class="col-9 offset-2">
+                <h5>@comment.User.FirstName @comment.User.LastName - @comment.CreatedAt</h5>
+                <p>@comment.CommentContent</p>
+            </div>
+        </div>
+    }
+
+    string Url = $"comment/create/{message.MessageId}";
+    
+    <div class="row">
+        <div class="col-9 offset-2">
+            <form action=@Url method="post">
+                <div class="form-group">
+                    @if (ViewBag.MessageIdForError != null && ViewBag.MessageIdForError == message.MessageId)
+                    {
+                        <label>Post a comment &nbsp<span class="error-message">@ViewBag.ErrorMessage</span></label>
+                    }
+                    else
+                    {
+                        <label>Post a comment &nbsp<span class="error-message"></span></label>
+                    }
+                    <textarea name="CommentContent" class="form-control comment"></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-success btn-sm">Post a Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
